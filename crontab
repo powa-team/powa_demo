@@ -1,0 +1,12 @@
+# m h  dom mon dow   command
+# primary
+*/30 *  * * * pgbench -c 1 -j 1 -T 30 -p 5432 -U powa bench > /dev/null 2>&1
+*/20 *  * * * sleep 40;pgbench -c 1 -j 1 -t 5 -p 5432 -n -U obvious -f scripts/commmand_price.sql obvious > /dev/null 2>&1
+*/25 *  * * * sleep 60;pgbench -c 1 -j 1 -t 5 -p 5432 -n -U obvious -f scripts/returned.sql obvious > /dev/null 2>&1
+*/30 *  * * * sleep 80;pgbench -c 1 -j 1 -t 5 -p 5432 -n -U tpc -f bench_v3.sql tpc > /dev/null 2>&1
+
+#secondary
+*/30 *  * * * sleep 140;pgbench -c 1 -j 1 -T 30 -p 5433 -n --select-only -U powa bench > /dev/null 2>&1
+*/20 *  * * * sleep 180;pgbench -c 1 -j 1 -t 5 -p 5433 -n -U obvious -f scripts/commmand_price.sql obvious > /dev/null 2>&1
+*/25 *  * * * sleep 200;pgbench -c 1 -j 1 -t 5 -p 5433 -n -U obvious -f scripts/returned.sql obvious > /dev/null 2>&1
+*/30 *  * * * sleep 230;pgbench -c 1 -j 1 -t 5 -p 5433 -n -U tpc -f bench_v3.sql tpc > /dev/null 2>&1
