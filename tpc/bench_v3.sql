@@ -55,7 +55,8 @@ SELECT pg_sleep(3);
 -- two quals, one needing a specific (but hardcoded) opclass
 SELECT COUNT(*) FROM commandes WHERE client_id = :cli_id AND priorite_commande LIKE '3-%';
 
--- two quals, one that cannot be optimized by any AM
+-- quals that cannot be optimized by any AM
+SELECT COUNT(*) FROM commandes WHERE client_id != :cli_id;
 SELECT COUNT(*) FROM commandes WHERE client_id != :cli_id AND priorite_commande LIKE '%3-%';
 
 -- other quals, still one needing a specific (but hardcoded) opclass
